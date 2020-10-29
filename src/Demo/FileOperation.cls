@@ -9,16 +9,21 @@ Parameter INVOCATION = "Queue";
 
 Method WriteToFile(pRequest As Demo.PostMessage, Output pResponse As Ens.Response) As %Status
 {
-    Set (ts,title,author,url) = ""
+    Set (ts, title, author, url, text) = ""
     If ($IsObject(pRequest.Post)) {
-        Set title = pRequest.Post.title
-        Set author = pRequest.Post.author
-        Set url = pRequest.Post.url
-        Set ts = ##class(%Library.PosixTime).LogicalToOdbc(##class(%Library.PosixTime).UnixTimeToLogical(pRequest.Post."created_utc"))
+        Set title = pRequest.Post.Title
+        Set author = pRequest.Post.Author
+        Set url = pRequest.Post.Url
+        Set text = pRequest.Post.Selftext
+        Set ts = ##class(%Library.PosixTime).LogicalToOdbc(##class(%Library.PosixTime).UnixTimeToLogical(pRequest.Post.CreatedUTC))
     }
     Set line = ts_" : "_title_" : "_author_" : "_url
-    Set tSC = ..Adapter.PutLine(pRequest.Found_".txt", line)
-    Return tSC
+    Set filename = pRequest.Found_".txt" 
+    $$$QuitOnError(..Adapter.PutLine(filename, line))
+    $$$QuitOnError(..Adapter.PutLine(filename, ""))
+    $$$QuitOnError(..Adapter.PutLine(filename, text))
+    $$$QuitOnError(..Adapter.PutLine(filename, " * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"))
+    Return $$$OK
 }
 
 XData MessageMap

@@ -10,7 +10,6 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="Feed">/new/</Setting>
     <Setting Target="Adapter" Name="SSLConfig"></Setting>
     <Setting Target="Adapter" Name="CallInterval">15</Setting>
-    <Setting Target="Adapter" Name="postLimit">100</Setting>
     <Setting Target="Adapter" Name="Limit">120</Setting>
   </Item>
   <Item Name="FilterPosts" Category="" ClassName="EnsLib.MsgRouter.RoutingEngine" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">

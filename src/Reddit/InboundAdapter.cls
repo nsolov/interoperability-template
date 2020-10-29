@@ -55,6 +55,7 @@ Method OnTask() As %Status
             If (value.data.selftext="") { Continue }            
             Set post = ##class(Reddit.Post).%New()
             $$$ThrowOnError(post.%JSONImport(value.data))
+            Set post.OriginalJSON = value.%ToJSON()
             $$$ThrowOnError(post.%Save())
             If ('updateLast) {
                 Set ..LastPostName = value.data.name
